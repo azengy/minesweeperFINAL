@@ -1,0 +1,173 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrew's Minesweeper</title>
+    <script src="{% static 'minesweeper/sweeper.js' %}"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #e7ecff;
+            flex-direction: column;
+        }
+
+        .welcome {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .welcome h1 {
+            font-size: 6rem;
+        }
+
+        .welcome button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 2rem;
+        }
+
+        .g {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            display: none;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 90vmin;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(var(--grid-size), 1fr);
+            grid-template-rows: repeat(var(--grid-size), 1fr);
+            width: 90vmin;
+            height: 90vmin;
+            background-color: black;
+        }
+
+        .section {
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 0.5px solid #555555;
+            user-select: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .flags {
+            font-size: 2rem;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .flags span {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .reset-button {
+            padding: 10px 20px;
+            font-size: 1.5rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .game-over {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            text-align: center;
+        }
+
+        #gameOverScreen h1 {
+            font-size: 15rem;
+            color: red;
+            margin-bottom: 20px;
+        }
+
+        #gameOverScreen button {
+            padding: 10px 20px;
+            font-size: 1.5rem;
+            background-color: #007bff;
+            color: #ffffff;
+            border-radius: 5px;
+        }
+
+        #congratulationsScreen h1 {
+            font-size: 12rem;
+            color: green;
+            margin-bottom: 20px;
+        }
+
+        #congratulationsScreen h2 {
+            font-size: 2rem;
+            color: green;
+            margin-bottom: 50px;
+        }
+
+        #congratulationsScreen button {
+            padding: 10px 20px;
+            font-size: 1.5rem;
+            background-color: #007bff;
+            color: #ffffff;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome" id="welcomeScreen">
+        <h1>Andrew's Minesweeper</h1>
+        <p>Select a difficulty:</p>
+        <button onclick="startGame(EASY_SIZE, EASY_MINES)">Easy</button>
+        <button onclick="startGame(MEDIUM_SIZE, MEDIUM_MINES)">Medium</button>
+        <button onclick="startGame(HARD_SIZE, HARD_MINES)">Hard</button>
+    </div>
+
+    <div class="g" id="gameContainer">
+        <div class="controls">
+            <button class="reset-button" onclick="resetGame()">Reset</button>
+        </div>
+        <div class="board">
+        </div>
+        <div class="controls">
+            <div class="flags">
+                Flags: <span id="flags-count">0</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="game-over" id="gameOverScreen">
+        <h1>KABLOOM</h1>
+        <button onclick="resetGame()">Reset</button>
+    </div>
+
+    <div class="game-over" id="congratulationsScreen">
+        <h1>Congratulations!</h1>
+        <h2>You have successfully cleared the board!</h2>
+        <button onclick="resetGame()">Play Again</button>
+    </div>
+</body>
+</html>
